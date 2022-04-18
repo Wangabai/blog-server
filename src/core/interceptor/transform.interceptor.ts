@@ -26,10 +26,11 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => {
+      map((result) => {
+        const { data, message } = result;
         return {
-          status: HttpStatus.OK,
-          message: '请求成功',
+          code: HttpStatus.OK,
+          message: message ? message : '请求成功',
           data: data,
         };
       }),
