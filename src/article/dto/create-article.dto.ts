@@ -4,7 +4,7 @@
  * @Date: 2022-04-13 11:18:55
  */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, validate } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateArticleDto {
   @ApiProperty({ description: '博客名称' })
@@ -20,5 +20,6 @@ export class CreateArticleDto {
   type: number;
 
   @ApiProperty({ description: '博客内容' })
+  @IsOptional()
   content: string;
 }

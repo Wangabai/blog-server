@@ -1,6 +1,6 @@
 /*
  * @Author: 王鑫
- * @Description:
+ * @Description: 博客服务
  * @Date: 2022-04-13 11:18:55
  */
 import { Injectable } from '@nestjs/common';
@@ -8,6 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { ListArticleDto } from './dto/list-article.dto';
+import { IdArticleDto } from './dto/id-article.dto';
 import { Article } from './entities/article.entity';
 
 @Injectable()
@@ -17,7 +19,11 @@ export class ArticleService {
     private articleRepository: Repository<Article>,
   ) {}
 
-  // 创建文章
+  /**
+   * @description: 创建文章
+   * @param {*}
+   * @return {*}
+   */
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     const article = new Article();
     article.articleName = createArticleDto.articleName;
@@ -28,19 +34,72 @@ export class ArticleService {
     return newArticle;
   }
 
-  findAll() {
-    return `This action returns all article`;
+  /**
+   * @description: 列表分页查询
+   * @param {ListArticleDto} listArticleDto
+   * @return {*}
+   */
+  async list(listArticleDto: ListArticleDto) {
+    const { articleName, page, pageSize } = listArticleDto;
+    const list = await this.articleRepository.createQueryBuilder('article');
+    list
+      .where('article.isDeleted = :isDeleted', { isDeleted: 0 })
+      .skip((page - 1) * pageSize)
+      .take(pageSize);
+    if (articleName)
+      list.andWhere('article.articleName = :articleName', {
+        articleName: articleName,
+      });
+    const result = await list.getMany();
+    const total = await list.getCount();
+    const count = Math.ceil(total / pageSize);
+
+    const data = {
+      list: result,
+      total: total,
+      count: count,
+      page: Number(page),
+      pageSize: Number(pageSize),
+    };
+    return data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  /**
+   * @description: 获取博客详情
+   * @param {number} id
+   * @return {*}
+   */
+  async detail(id: number) {
+    const articleDetail = await this.articleRepository.findOne(id);
+    return articleDetail;
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  /**
+   * @description: 更新博客
+   * @param {UpdateArticleDto} updateArticleDto
+   * @return {*}
+   */
+  async update(updateArticleDto: UpdateArticleDto): Promise<Article> {
+    const { id } = updateArticleDto;
+    const articleToUpdate = await this.articleRepository.findOne(id);
+    articleToUpdate.articleName = updateArticleDto.articleName;
+    articleToUpdate.type = updateArticleDto.type;
+    articleToUpdate.author = updateArticleDto.author;
+    articleToUpdate.content = updateArticleDto.content;
+    const result = await this.articleRepository.save(articleToUpdate);
+    return result;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  /**
+   * @description: 删除博客
+   * @param {DeleteArticleDto} idDto
+   * @return {*}
+   */
+  async delete(idDto: IdArticleDto) {
+    const { id } = idDto;
+    const articleToUpdate = await this.articleRepository.findOne(id);
+    articleToUpdate.isDeleted = 1;
+    const result = await this.articleRepository.save(articleToUpdate);
+    return result;
   }
 }

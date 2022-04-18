@@ -5,6 +5,7 @@
  */
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 @Entity('article')
 export class Article {
@@ -12,9 +13,9 @@ export class Article {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ApiProperty({ description: '作者' })
+  @ApiProperty({ description: '标题' })
   @Column()
-  articleName: string; // 作者
+  articleName: string; // 标题
 
   @ApiProperty({ description: '作者' })
   @Column()
@@ -29,11 +30,11 @@ export class Article {
   content: string; //博客内容
 
   @ApiProperty({ description: '赞数' })
-  @Column()
+  @Column({ default: 0 })
   like: number; // 赞
 
   @ApiProperty({ description: '访问数' })
-  @Column()
+  @Column({ default: 0 })
   access: number; // 访问
 
   @ApiProperty({ description: '创建时间' })
@@ -51,4 +52,9 @@ export class Article {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updateTime: Date;
+
+  @ApiProperty({ description: '是否删除（0否，1是）' })
+  @Exclude()
+  @Column({ default: 0 })
+  isDeleted: number; // 删除
 }
