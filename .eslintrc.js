@@ -1,3 +1,8 @@
+/*
+ * @Author: 王鑫
+ * @Description: 
+ * @Date: 2022-03-03 13:18:06
+ */
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -20,5 +25,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 0
   },
 };

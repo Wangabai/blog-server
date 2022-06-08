@@ -13,6 +13,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // 设置所有接口路径 '/api/xxx'
   app.setGlobalPrefix('api');
 
   // 全局注册拦截器

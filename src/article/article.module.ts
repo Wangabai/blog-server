@@ -8,9 +8,28 @@ import { ArticleService } from './article.service';
 import { ArticleController } from './article.controller';
 import { Article } from './entities/article.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { CategoryModule } from '../category/category.module';
+import { TagModule } from '../tag/tag.module';
+import { MulterModule } from '@nestjs/platform-express';
+const MAO = require('multer-aliyun-oss');
 @Module({
-  imports: [TypeOrmModule.forFeature([Article])],
+  imports: [
+    MulterModule.register({
+      storage: MAO({
+        config: {
+          region: 'oss-cn-hangzhou',
+          accessKeyId: 'LTAI5tDT86TjwFhpaTn6DdkQ',
+          accessKeySecret: 'Z15w1FvghV9qG3J1rjSSNixD0UohMQ',
+          bucket: 'wab-blog',
+        },
+        // to set path prefix for files, could be string or function
+        destination: '/blog-image',
+      }),
+    }),
+    TypeOrmModule.forFeature([Article]),
+    CategoryModule,
+    TagModule,
+  ],
   controllers: [ArticleController],
   providers: [ArticleService],
   exports: [ArticleService],
