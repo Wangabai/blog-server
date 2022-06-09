@@ -4,16 +4,16 @@
  * @Date: 2022-05-17 15:48:43
  */
 const productConfig = {
-  accessKeyId: 'LTAI5tDT86TjwFhpaTn6DdkQ',
-  accessKeySecret: 'Z15w1FvghV9qG3J1rjSSNixD0UohMQ',
+  accessKeyId: 'LTAI5tSZEHi5XzR5bCYpEc9m',
+  accessKeySecret: '7NWHohVMUAaUk1cq5Z2NXRY6WLvElp',
   endpoint: 'oss-cn-hangzhou.aliyuncs.com',
   bucket: 'wab-blog',
   region: 'oss-cn-hangzhou',
 };
 
 const localConfig = {
-  accessKeyId: 'LTAI5tDT86TjwFhpaTn6DdkQ',
-  accessKeySecret: 'Z15w1FvghV9qG3J1rjSSNixD0UohMQ',
+  accessKeyId: 'LTAI5tSZEHi5XzR5bCYpEc9m',
+  accessKeySecret: '7NWHohVMUAaUk1cq5Z2NXRY6WLvElp',
   endpoint: 'oss-cn-hangzhou.aliyuncs.com',
   bucket: 'wab-blog',
   region: 'oss-cn-hangzhou',

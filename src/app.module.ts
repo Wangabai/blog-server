@@ -12,24 +12,12 @@ import { ArticleModule } from './article/article.module';
 import { WebModule } from './web/web.module';
 import { TagModule } from './tag/tag.module';
 import { CategoryModule } from './category/category.module';
-import { MulterModule } from '@nestjs/platform-express';
+// import { MulterModule } from '@nestjs/platform-express';
 
-const MAO = require('multer-aliyun-oss');
+// const MAO = require('multer-aliyun-oss');
 
 @Module({
   imports: [
-    MulterModule.register({
-      storage: MAO({
-        config: {
-          region: 'oss-cn-hangzhou',
-          accessKeyId: 'LTAI5tDT86TjwFhpaTn6DdkQ',
-          accessKeySecret: 'Z15w1FvghV9qG3J1rjSSNixD0UohMQ',
-          bucket: 'wab-blog',
-        },
-        // to set path prefix for files, could be string or function
-        destination: '',
-      }),
-    }),
     TypeOrmModule.forRoot(),
     UserModule,
     ArticleModule,
