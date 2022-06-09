@@ -35,6 +35,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # 忽略提交文件
-/config
+/config-env
 dist
 node_modules
