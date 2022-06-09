@@ -36,3 +36,5 @@ lerna-debug.log*
 
 # config
 /config
+/dist
+node_modules
